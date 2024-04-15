@@ -1,14 +1,11 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import Cookies from 'js-cookie';
 	import { page } from '$app/stores';
 	import { isAuthenticated, user } from '../auth/auth';
 	const allowedPages = ['/home'];
 
-	/**
-	 * @type {string}
-	 */
-	let currentUsername;
+	let currentUsername: string;
 	user.subscribe((value) => {
 		currentUsername = value;
 	});
