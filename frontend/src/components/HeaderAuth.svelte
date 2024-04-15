@@ -31,7 +31,7 @@
 	}
 </script>
 
-{#if allowedPages.includes($page.url.pathname) && currentUsername}
+{#if allowedPages.includes($page.url.pathname) && currentUsername && isAuthenticated}
 	<header class="bg-gray-800 text-white py-4">
 		<nav class="flex justify-center">
 			<ul class="flex space-x-4">
