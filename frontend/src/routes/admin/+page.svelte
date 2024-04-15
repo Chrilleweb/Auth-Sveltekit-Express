@@ -1,6 +1,6 @@
 <script lang="ts">
     import { isAuthenticated } from '../../auth/auth';
-    import ErrorAuth from '../../components/ErrorAuth.svelte';
+    import ErrorAdmin from '../../components/ErrorAdmin.svelte';
     export let data;
     const username = data.props.userName;
 	const userId = data.props.userId;
@@ -24,5 +24,5 @@
 		</p>
 	</div>
 {:else}
-	<ErrorAuth />
+	<ErrorAdmin />
 {/if}
