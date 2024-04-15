@@ -4,6 +4,7 @@
 	export let data;
 	const username = data.props.userName;
 	const userId = data.props.userId;
+	const userRole = data.props.role;
 	user.set(username);
 </script>
 
@@ -11,6 +12,10 @@
 	<title>Home</title>
 	<meta name="description" content="Home" />
 </svelte:head>
+
+{#if userRole === 'admin'}
+	<h1>YOU ARE ADMIN</h1>
+{/if}
 
 {#if userId && isAuthenticated}
 	<div class="container mx-auto py-8">

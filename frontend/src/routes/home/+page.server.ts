@@ -4,10 +4,12 @@ export const load = async (serverLoadEvent) => {
 	const data = await response.json();
 	const userName = data.userName;
 	const userId = data.userId;
+	const role = data.role;
 	return {
 		props: {
 			userId,
-			userName
+			userName,
+			role
 		}
 	};
 };
