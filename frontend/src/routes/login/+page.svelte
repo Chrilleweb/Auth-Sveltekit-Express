@@ -33,6 +33,10 @@
 			console.error('Login failed:', error);
 		}
 	}
+
+	function handleForgotPassword() {
+		goto('/request-reset');
+	}
 </script>
 
 <svelte:head>
@@ -67,6 +71,11 @@
 				class="form-input mt-1 block w-full border rounded-md p-2"
 				bind:value={password}
 			/>
+		</div>
+		<div class="text-center mb-4">
+			<a class="text-blue-500 hover:underline" href="/request-reset" on:click={handleForgotPassword}
+				>Forgot password?</a
+			>
 		</div>
 		<a class="text-blue-500 mb-4 block" href="/signup">Don't have an account? Sign up here</a>
 		<button

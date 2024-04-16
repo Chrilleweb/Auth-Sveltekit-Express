@@ -20,7 +20,7 @@ const sendResetEmail = async (req, res) => {
   try {
     const user = await User.findByEmail(email);
     if (!user) {
-      return res.status(404).send("User not found.");
+      return res.status(404).json({ message: "Email not found" });
     }
 
     const token = crypto.randomBytes(20).toString("hex");
@@ -52,10 +52,10 @@ const sendResetEmail = async (req, res) => {
       html: emailHtml,
     });
 
-    res.send("Reset password link sent.");
+    res.status(200).json({ message: `Email sent to ${email}. Please check your email to reset your password.` });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal server error.");
+    res.status(500).json({ message: "Error sending email" });
   }
 };
 
@@ -66,22 +66,22 @@ const resetPassword = async (req, res) => {
   try {
     const user = await User.findByResetToken(token);
     if (!user || new Date() > new Date(user.resetTokenExpiration)) {
-      return res.status(400).send("Invalid or expired token.");
+      return res.status(400).json({ message: "Invaldi or Expired token" });
     }
 
     // Check if the new password is the same as the old password
     const isSamePassword = await bcrypt.compare(newPassword, user.password);
     if (isSamePassword) {
-      return res.status(400).send("New password cannot be the same as the old password.");
+      return res.status(400).json({ message: "New password cannot be the same as the old password." });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);
     await User.updatePassword(user.id, hashedPassword);
 
-    res.send("Password has been reset successfully.");
+    res.status(200).json({ message: "Reset password link sent." });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal server error.");
+    return res.status(500).json({ message: "Internal server error." });
   }
 };
 

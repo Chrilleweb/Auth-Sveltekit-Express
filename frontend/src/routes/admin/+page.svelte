@@ -1,12 +1,11 @@
 <script lang="ts">
-    import { isAuthenticated } from '../../auth/auth';
-    import ErrorAdmin from '../../components/ErrorAdmin.svelte';
-    export let data;
-    const username = data.props.userName;
+	import { isAuthenticated } from '../../auth/auth';
+	import ErrorAdmin from '../../components/ErrorAdmin.svelte';
+	export let data;
+	const username = data.props.userName;
 	const userId = data.props.userId;
 	const userRole = data.props.role;
 </script>
-
 
 <svelte:head>
 	<title>Admin</title>
