@@ -3,7 +3,7 @@
 	import Cookies from 'js-cookie';
 	import { page } from '$app/stores';
 	import { isAuthenticated, user } from '../auth/auth';
-	const allowedPages = ['/home'];
+	const allowedPages = ['/home', '/admin'];
 
 	let currentUsername: string;
 	user.subscribe((value) => {
