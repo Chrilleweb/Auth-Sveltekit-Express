@@ -1,9 +1,14 @@
 <script lang="ts">
+	import { writable } from 'svelte/store';
+	
 	let email: string = '';
-	let message: string = '';
+	let message = writable('');
+	let loading = writable(false);
 
 	async function handleResetRequest(event: Event) {
 		event.preventDefault();
+		loading.set(true);
+		message.set('');
 
 		try {
 			const response = await fetch('http://localhost:8080/api/request-reset', {
@@ -18,26 +23,48 @@
 			if (!response.ok) {
 				throw new Error(data.message || 'Failed to send reset email');
 			}
-			message = data.message;
+
+			message.set(data.message);
+
 		} catch (error) {
-			message = (error as Error).message;
+			message.set((error as Error).message);
+		} finally {
+			loading.set(false);
 		}
 	}
 </script>
+
 
 <svelte:head>
 	<title>Reset Password</title>
 </svelte:head>
 
-<div class="mt-8 mx-auto bg-white p-6 rounded-md shadow-md w-full max-w-sm">
+<style>
+	.toast { 
+		position: fixed; 
+		top: 10%; 
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: rgba(0, 0, 0, 0.75);
+		color: white;
+		padding: 10px 20px;
+		border-radius: 5px;
+		z-index: 1000;
+		transition: opacity 0.5s, visibility 0.5s;
+		opacity: 0;
+		visibility: hidden;
+	}
+	.toast.show {
+		opacity: 1;
+		visibility: visible;
+	}
+</style>
+
+
+<div class="mt-40 mx-auto bg-white p-6 rounded-md shadow-md w-full max-w-sm">
 	<h1 class="text-2xl font-semibold mb-4 text-center">Reset Password</h1>
-	{#if message}
-		{#if message.includes('Email sent to')}
-			<p class="text-green-500 mb-4">{message}</p>
-			<a class="text-blue-500 mb-4 block" href="/login">Login here!</a>
-		{:else}
-			<p class="text-red-500 mb-4">{message}</p>
-		{/if}
+	{#if $message}
+		<p class="toast show">{$message}</p>
 	{/if}
 	<form on:submit={handleResetRequest}>
 		<div class="mb-6">
@@ -52,8 +79,12 @@
 				required
 			/>
 		</div>
-		<button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-			Send Reset Link
+		<button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" disabled={$loading}>
+			{#if $loading}
+				Processing...
+			{:else}
+				Send Reset Link
+			{/if}
 		</button>
 	</form>
 </div>
