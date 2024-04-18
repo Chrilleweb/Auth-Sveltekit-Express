@@ -39,28 +39,6 @@
 	<title>Reset Password</title>
 </svelte:head>
 
-<style>
-	.toast { 
-		position: fixed; 
-		top: 10%; 
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: rgba(0, 0, 0, 0.75);
-		color: white;
-		padding: 10px 20px;
-		border-radius: 5px;
-		z-index: 1000;
-		transition: opacity 0.5s, visibility 0.5s;
-		opacity: 0;
-		visibility: hidden;
-	}
-	.toast.show {
-		opacity: 1;
-		visibility: visible;
-	}
-</style>
-
-
 <div class="mt-40 mx-auto bg-white p-6 rounded-md shadow-md w-full max-w-sm">
 	<h1 class="text-2xl font-semibold mb-4 text-center">Reset Password</h1>
 	{#if $message}
