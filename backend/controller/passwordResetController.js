@@ -66,7 +66,7 @@ const resetPassword = async (req, res) => {
   try {
     const user = await User.findByResetToken(token);
     if (!user || new Date() > new Date(user.resetTokenExpiration)) {
-      return res.status(400).json({ message: "Invaldi or Expired token" });
+      return res.status(400).json({ message: "Invalid or Expired token" });
     }
 
     // Check if the new password is the same as the old password
@@ -78,7 +78,7 @@ const resetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 12);
     await User.updatePassword(user.id, hashedPassword);
 
-    res.status(200).json({ message: "Reset password link sent." });
+    res.status(200).json({ message: "Password has been reset successfully. " });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error." });
