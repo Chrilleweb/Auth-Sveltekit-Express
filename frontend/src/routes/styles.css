@@ -6,9 +6,9 @@ body {
 	@apply bg-stone-200;
 }
 
-.toast { 
-	position: fixed; 
-	top: 10%; 
+.toast {
+	position: fixed;
+	top: 10%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: rgba(0, 0, 0, 0.75);
@@ -16,7 +16,9 @@ body {
 	padding: 10px 20px;
 	border-radius: 5px;
 	z-index: 1000;
-	transition: opacity 0.5s, visibility 0.5s;
+	transition:
+		opacity 0.5s,
+		visibility 0.5s;
 	opacity: 0;
 	visibility: hidden;
 }

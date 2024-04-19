@@ -75,6 +75,11 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "New password cannot be the same as the old password." });
     }
 
+    // Validate password length
+    if (newPassword.length < 6 || newPassword.length > 20) {
+      return res.status(400).json({ message: "Password must be between 6 and 20 characters long" });
+    }
+
     const hashedPassword = await bcrypt.hash(newPassword, 12);
     await User.updatePassword(user.id, hashedPassword);
 

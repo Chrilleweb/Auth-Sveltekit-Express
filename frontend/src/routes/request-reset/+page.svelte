@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
-	
+
 	let email: string = '';
 	let message = writable('');
 	let loading = writable(false);
@@ -25,7 +25,6 @@
 			}
 
 			message.set(data.message);
-
 		} catch (error) {
 			message.set((error as Error).message);
 		} finally {
@@ -33,7 +32,6 @@
 		}
 	}
 </script>
-
 
 <svelte:head>
 	<title>Reset Password</title>
@@ -57,7 +55,11 @@
 				required
 			/>
 		</div>
-		<button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" disabled={$loading}>
+		<button
+			type="submit"
+			class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+			disabled={$loading}
+		>
 			{#if $loading}
 				Processing...
 			{:else}

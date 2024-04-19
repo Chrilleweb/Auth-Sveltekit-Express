@@ -59,6 +59,7 @@
 				autocomplete="username"
 				class="form-input mt-1 block w-full border rounded-md p-2"
 				bind:value={username}
+				required
 			/>
 		</div>
 		<div class="mb-4">
@@ -70,6 +71,7 @@
 				autocomplete="current-password"
 				class="form-input mt-1 block w-full border rounded-md p-2"
 				bind:value={password}
+				required
 			/>
 		</div>
 		<div class="text-center mb-4">
