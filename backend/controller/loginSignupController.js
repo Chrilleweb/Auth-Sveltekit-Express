@@ -80,7 +80,7 @@ const signup_post = async (req, res) => {
     </html>`;
 
     await transporter.sendMail({
-      from: '"Service Name" <postmaster@sandbox396c2341a93745168ba720519280e9a3.mailgun.org>',
+      from: `"Welcome ${username}" <postmaster@sandbox396c2341a93745168ba720519280e9a3.mailgun.org>`,
       to: email,
       subject: "Welcome to Our Service!",
       html: welcomeEmailHtml,
