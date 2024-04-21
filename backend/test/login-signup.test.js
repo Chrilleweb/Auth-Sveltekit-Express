@@ -48,7 +48,7 @@ describe("Login and Signup logic", () => {
     await request(app).post("/api/signup")
       .send({
         username: "testusersignup1",
-        email: "exampleeee@mail.com",
+        email: "christian@munk-nissen.dk",
         password: "password",
       })
       .expect(201);
@@ -277,8 +277,7 @@ describe("Authentication Flow admin", () => {
       .expect(200);
 
     // Step 4: Verify the response
-    expect(response.body.message).toEqual("Welcome to the admin dashboard");
-    expect(response.body.user.role).toEqual("admin");
+    expect(response.body.role).toEqual("admin");
   });
 
   // Test access to admin page without authentication

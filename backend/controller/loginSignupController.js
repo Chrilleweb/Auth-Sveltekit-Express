@@ -1,6 +1,18 @@
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+
+// Configure Nodemailer to use Mailgun SMTP for sending emails
+let transporter = nodemailer.createTransport({
+  host: "smtp.mailgun.org",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "postmaster@sandbox396c2341a93745168ba720519280e9a3.mailgun.org",
+    pass: process.env.MAILGUN_PASS,
+  },
+});
 
 const signup_post = async (req, res) => {
   try {
@@ -56,6 +68,23 @@ const signup_post = async (req, res) => {
     // Create a new user
     const newUser = { username, email, password: hashedPassword, role: userRole };
     await User.create(newUser);
+
+    // Send a welcome email
+    const welcomeEmailHtml = `
+    <html>
+      <body>
+        <h1>Welcome to Our Service!</h1>
+        <p>Hi ${username},</p>
+        <p>Thank you for signing up. We are glad to have you on board!</p>
+      </body>
+    </html>`;
+
+    await transporter.sendMail({
+      from: '"Service Name" <postmaster@sandbox396c2341a93745168ba720519280e9a3.mailgun.org>',
+      to: email,
+      subject: "Welcome to Our Service!",
+      html: welcomeEmailHtml,
+    });
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
