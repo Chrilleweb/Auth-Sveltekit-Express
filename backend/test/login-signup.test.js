@@ -277,7 +277,7 @@ describe("Authentication Flow admin", () => {
       .expect(200);
 
     // Step 4: Verify the response
-    expect(response.body.role).toEqual("admin");
+    expect(response.body.user.role).toEqual("admin");
   });
 
   // Test access to admin page without authentication

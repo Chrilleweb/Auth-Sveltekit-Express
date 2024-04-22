@@ -13,6 +13,18 @@ class User {
     });
   }
 
+  static findAllUsers() {
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * FROM users", (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+
   static create(newUser) {
     return new Promise((resolve, reject) => {
       db.query("INSERT INTO users SET ?", newUser, (error, results) => {
