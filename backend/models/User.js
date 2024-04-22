@@ -49,6 +49,18 @@ class User {
     });
   }
 
+  static deleteUser(id) {
+    return new Promise((resolve, reject) => {
+      db.query("DELETE FROM users WHERE id = ?", [id], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results.affectedRows > 0);
+        }
+      });
+    });
+  }
+
   static saveResetToken(userId, token, expiration) {
     return new Promise((resolve, reject) => {
       db.query("UPDATE users SET resetToken = ?, resetTokenExpiration = ? WHERE id = ?", [token, expiration, userId], (error, results) => {
