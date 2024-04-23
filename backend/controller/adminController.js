@@ -6,8 +6,14 @@ const admin_get = (req, res) => {
 
 const getAllUsers = async (req, res) => {
   const users = await User.findAllUsers();
-  const usersNameEmailAndRole = users.map((user) => {
-    return {id: user.id, username: user.username, email: user.email, role: user.role};
+  const sortedUsers = users.sort((a, b) => {
+    if (a.role === b.role) {
+      return a.username.localeCompare(b.username);
+    }
+    return a.role.localeCompare(b.role);
+  });
+  const usersNameEmailAndRole = sortedUsers.map((user) => {
+    return { id: user.id, username: user.username, email: user.email, role: user.role };
   });
   res.status(200).json(usersNameEmailAndRole);
 };

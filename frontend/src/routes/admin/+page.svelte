@@ -46,11 +46,6 @@
 		userIdToDelete = null;
 	}
 
-	$: sortedUsers = dataUsers.slice().sort((a: { role: string; }, b: { role: string; }) => {
-		if (a.role === 'admin' && b.role !== 'admin') return -1;
-		if (a.role !== 'admin' && b.role === 'admin') return 1;
-		return 0;
-	});
 </script>
 
 <svelte:head>
@@ -84,7 +79,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each sortedUsers as user}
+				{#each dataUsers as user}
 					<tr>
 						<td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">{user.username}</td>
 						<td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">{user.email}</td>
