@@ -18,6 +18,17 @@ const getAllUsers = async (req, res) => {
   res.status(200).json(usersNameEmailAndRole);
 };
 
+const updateRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+  const result = await User.updateRole(id, role);
+  if (result) {
+    res.status(200).json({ message: "Role updated successfully" });
+  } else {
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
+
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   const result = await User.deleteUser(id);
@@ -31,5 +42,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
   admin_get,
   getAllUsers,
+  updateRole,
   deleteUser,
 };

@@ -37,6 +37,18 @@ class User {
     });
   }
 
+  static updateRole(userId, role) {
+    return new Promise((resolve, reject) => {
+      db.query("UPDATE users SET role = ? WHERE id = ?", [role, userId], (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results.affectedRows > 0);
+        }
+      });
+    });
+  }
+
   static findByEmail(email) {
     return new Promise((resolve, reject) => {
       db.query("SELECT * FROM users WHERE email = ?", [email], (error, results) => {

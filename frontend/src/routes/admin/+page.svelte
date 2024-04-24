@@ -46,6 +46,30 @@
 		userIdToDelete = null;
 	}
 
+	function handleRoleChange(event: Event, userId: number) {
+		const select = event.target as HTMLSelectElement;
+		updateRole(userId, select.value);
+	}
+
+	async function updateRole(id: number, role: string) {
+		try {
+			const url = `http://localhost:8080/auth/admin/${id}`;
+			const response = await fetch(url, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ role }),
+				credentials: 'include'
+			});
+
+			if (response.ok) {
+				location.reload();
+			}
+		} catch (error) {
+			console.error('Fetch error:', error);
+		}
+	}
 </script>
 
 <svelte:head>
@@ -89,6 +113,14 @@
 								on:click={() => askDeleteConfirmation(user.id)}
 								class="text-red-500 hover:text-red-700">Delete</button
 							>
+							<select
+								bind:value={user.role}
+								on:change={(event) => handleRoleChange(event, user.id)}
+								class="block w-full mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							>
+								<option value="admin">Admin</option>
+								<option value="user">User</option>
+							</select>
 						</td>
 					</tr>
 				{/each}
