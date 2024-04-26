@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const util = require("util");
 const pool = require("../config/dbConfig");
 require("dotenv").config();
